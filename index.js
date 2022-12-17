@@ -28,25 +28,25 @@ app.get("/", (req, res) => {
   res.send("Ok – Servidor disponível.");
 });
 
-app.get("/usuarios", (req, res) => {
+app.get("/elementos", (req, res) => {
   try {
-    client.query("SELECT * FROM Usuarios", function (err, result) {
+    client.query("SELECT * FROM Elementos", function (err, result) {
       if (err) {
         return console.error("Erro ao executar a qry de SELECT", err);
       }
       res.send(result.rows);
-      //console.log("Chamou get usuarios");
+      //console.log("Chamou get elementos");
     });
   } catch (error) {
     console.log(error);
   }
 });
 
-app.get("/usuarios/:id", (req, res) => {
+app.get("/elementos/:id", (req, res) => {
   try {
     console.log("Chamou /:id " + req.params.id);
     client.query(
-      "SELECT * FROM Usuarios WHERE id = $1",
+      "SELECT * FROM Elementos WHERE id = $1",
       [req.params.id],
       function (err, result) {
         if (err) {
@@ -61,12 +61,12 @@ app.get("/usuarios/:id", (req, res) => {
   }
 });
 
-app.delete("/usuarios/:id", (req, res) => {
+app.delete("/elementos/:id", (req, res) => {
   try {
     console.log("Chamou delete /:id " + req.params.id);
     const id = req.params.id;
     client.query(
-      "DELETE FROM Usuarios WHERE id = $1",
+      "DELETE FROM Elementos WHERE id = $1",
       [id],
       function (err, result) {
         if (err) {
@@ -86,13 +86,13 @@ app.delete("/usuarios/:id", (req, res) => {
   }
 });
 
-app.post("/usuarios", (req, res) => {
+app.post("/elementos", (req, res) => {
   try {
     console.log("Chamou post", req.body);
-    const { nome, email } = req.body;
+    const { nome, formato } = req.body;
     client.query(
-      "INSERT INTO Usuarios (nome, email) VALUES ($1, $2) RETURNING * ",
-      [nome, email],
+      "INSERT INTO Elementos (nome, formato) VALUES ($1, $2) RETURNING * ",
+      [nome, formato],
       (err, result) => {
         if (err) {
           return console.error("Erro ao executar a qry de INSERT", err);
@@ -108,14 +108,14 @@ app.post("/usuarios", (req, res) => {
   }
 });
 
-app.put("/usuarios/:id", (req, res) => {
+app.put("/elementos/:id", (req, res) => {
   try {
     console.log("Chamou update", req.body);
     const id = req.params.id;
-    const { nome, email } = req.body;
+    const { nome, formato } = req.body;
     client.query(
-      "UPDATE Usuarios SET nome=$1, email=$2 WHERE id =$3 ",
-      [nome, email, id],
+      "UPDATE Elementos SET nome=$1, formato=$2 WHERE id =$3 ",
+      [nome, formato, id],
       function (err, result) {
         if (err) {
           return console.error("Erro ao executar a qry de UPDATE", err);
