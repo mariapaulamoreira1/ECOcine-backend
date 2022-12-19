@@ -1,3 +1,4 @@
+//#configuracoes para o express (local)
 const dotenv = require('dotenv');
 dotenv.config();
 const {
@@ -8,3 +9,4 @@ module.exports = {
 port: PORT,
 urlConnection: pgConnection
 }
+// pgConnection configuracoes para o postgreSQL remoto
