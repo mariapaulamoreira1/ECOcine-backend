@@ -1,3 +1,4 @@
+//Este aplicativo inicia um servidor e escuta na porta 8081 para conexões.
 const express = require("express");
 const { Client } = require("pg");
 const cors = require("cors");
